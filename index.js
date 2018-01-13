@@ -27,21 +27,21 @@ const requestHandler = (request, response) => {
 				}
 
 				// success case, the file was saved
-				//console.log('UPC saved!');
+				responseMsg = responseMsg + '<p>Page Saved</p>';
+				console.log('UPC saved!');
 			});
 
 			browser.close();
-			
-			response.write('<html>');
-			response.write('<body>');
-			response.write('<h1>' + request.url + '</h1>');
-			response.write(responseMsg);
-			response.write('</body>');
-			response.write('</html>');
-			response.end();				
-			
 		}
 		run();
+		
+		response.write('<html>');
+		response.write('<body>');
+		response.write('<h1>' + request.url + '</h1>');
+		response.write(responseMsg);
+		response.write('</body>');
+		response.write('</html>');
+		response.end();	
 		
 	}
 }
