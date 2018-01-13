@@ -47,7 +47,6 @@ const requestHandler = (request, response) => {
 		
 	}
 }
-
 const server = http.createServer(requestHandler)
 
 server.listen(port, (err) => {
