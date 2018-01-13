@@ -8,6 +8,8 @@ const requestHandler = (request, response) => {
 
 	//console.log(request.url);
 
+	var responseMsg = '<p>Running for ' + request.url + '</p>';
+	
 	if (request.url != '/favicon.ico') {
 		async function run() {
 
@@ -19,22 +21,27 @@ const requestHandler = (request, response) => {
 
 			fs.writeFile('./upcs' + request.url + '.html', theHTML, {"encoding":'ascii'}, (err) => {
 				// throws an error, you could also catch it here
-				if (err) throw err;
+				if (err) {
+					responseMsg = responseMsg + '<p>Error thrown</p>';
+					throw err;
+				}
 
 				// success case, the file was saved
-				console.log('UPC saved!');
+				//console.log('UPC saved!');
 			});
 
 			browser.close();
+			
+			response.write('<html>');
+			response.write('<body>');
+			response.write('<h1>' + request.url + '</h1>');
+			response.write(responseMsg);
+			response.write('</body>');
+			response.write('</html>');
+			response.end();				
+			
 		}
 		run();
-		
-		response.write('<html>');
-		response.write('<body>');
-		response.write('<h1>' + request.url + '</h1>');
-		response.write('</body>');
-		response.write('</html>');
-		response.end();	
 		
 	}
 }
