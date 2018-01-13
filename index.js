@@ -1,3 +1,20 @@
+/* 
+	To deploy you need to add these buildpacks:
+	heroku buildpacks:add https://github.com/jontewks/puppeteer-heroku-buildpack -a upcgrabber
+	heroku buildpacks:add heroku/nodejs -a upcgrabber
+	
+	other important commands
+	
+	start a bash shell
+		heroku run -a upcgrabber bash
+		
+	get a list of running processes
+		heroku ps -a upcgrabber
+		
+	
+	
+*/
+
 const fs = require('fs');
 const http = require('http');
 const port = process.env.PORT || 5000;
@@ -20,6 +37,8 @@ const requestHandler = (request, response) => {
 			await page.goto('https://google.com/search?q=' + request.url);
 			var theHTML = await page.content();
 
+			console.log(theHTML.substring(1,100);
+			
 			fs.writeFile( __dirname + '/upcs' + request.url + '.html', theHTML, {"encoding":'ascii'}, (err) => {
 				// throws an error, you could also catch it here
 				if (err) {
