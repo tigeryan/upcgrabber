@@ -19,7 +19,7 @@ const requestHandler = (request, response) => {
 			await page.goto('https://google.com/search?q=' + request.url);
 			var theHTML = await page.content();
 
-			fs.writeFile('./upcs' + request.url + '.html', theHTML, {"encoding":'ascii'}, (err) => {
+			fs.writeFile( __dirname + '/upcs' + request.url + '.html', theHTML, {"encoding":'ascii'}, (err) => {
 				// throws an error, you could also catch it here
 				if (err) {
 					responseMsg = responseMsg + '<p>Error thrown</p>';
