@@ -1,6 +1,6 @@
 const fs = require('fs');
 const http = require('http');
-const port = 443;
+const port = 3000;
 
 const requestHandler = (request, response) => {
 
