@@ -1,12 +1,12 @@
 const fs = require('fs');
 const http = require('http');
-const port = 3000;
+const port = 443;
 
 const requestHandler = (request, response) => {
 
 	const puppeteer = require('puppeteer');
 
-	console.log(request.url);
+	//console.log(request.url);
 
 	if (request.url != '/favicon.ico') {
 		async function run() {
@@ -28,6 +28,14 @@ const requestHandler = (request, response) => {
 			browser.close();
 		}
 		run();
+		
+		response.write('<html>');
+		response.write('<body>');
+		response.write('<h1>' + request.url + '</h1>');
+		response.write('</body>');
+		response.write('</html>');
+		response.end();	
+		
 	}
 }
 
