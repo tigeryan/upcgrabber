@@ -10,9 +10,6 @@
 		
 	get a list of running processes
 		heroku ps -a upcgrabber
-		
-	
-	
 */
 
 const fs = require('fs');
