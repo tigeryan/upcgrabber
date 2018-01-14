@@ -59,7 +59,7 @@ const requestHandler = (request, response) => {
 			//console.log(Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('ascii'));
 			
 			let options = {  
-				url: 'http://www.njracing.com/receiveHTML.cfc?method=getHTML',
+				url: 'http://www.njracing.com/upcgrabber.cfc?method=saveHTML',
 				form: { theUPC: request.url, theHTML: innerHTML64 }
 			};			
 			//console.log( options );
