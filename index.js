@@ -53,11 +53,15 @@ const requestHandler = (request, response) => {
 			//console.log(innerText);
 			//console.log(innerHTML);
 			
+			var innerHTML64 = Buffer.from(innerHTML).toString('base64');
+			
+			//console.log(innerHTML64);
+			//console.log(Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('ascii'));
+			
 			let options = {  
 				url: 'http://www.njracing.com/receiveHTML.cfc?method=getHTML',
-				form: { theUPC: request.url, theHTML: innerHTML }
+				form: { theUPC: request.url, theHTML: innerHTML64 }
 			};			
-
 			//console.log( options );
 			
 			returnRequest.post(options,
