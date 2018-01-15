@@ -34,67 +34,60 @@ const requestHandler = (request, response) => {
 
 			await page.goto('https://google.com/search?q=' + request.url);
 			var theHTML = await page.content();
-
 			
 			//jackpot-main-content-container
 			//097855056979l
-			//console.log(theHTML.substring(1,100));
+			//console.log(theHTML);
 			
 			var returnRequest = require('request');
 
 			//const textContent = await page.evaluate(() => document.querySelector('.jackpot-main-content-container').textContent);
 			//const innerText = await page.evaluate(() => document.querySelector('.jackpot-main-content-container').innerText);
-			const innerHTML = await page.evaluate(() => document.querySelector('.jackpot-main-content-container').innerHTML);
-
+			var innerHTML = '';
+			try {
+				innerHTML = await page.evaluate(() => document.querySelector('.jackpot-main-content-container').innerHTML);
+			} catch (err) {
+				
+			}
 			//console.log(textContent);
 			//console.log(innerText);
-			//console.log(innerHTML);
+			//console.log('innerhtml: ' + innerHTML);
 			
-			var innerHTML64 = Buffer.from(innerHTML).toString('base64');
-			
-			//console.log(innerHTML64);
-			//console.log(Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('ascii'));
-			
-			let options = {  
-				url: 'http://www.njracing.com/upcgrabber.cfc?method=saveHTML',
-				form: { theUPC: request.url, theHTML: innerHTML64 }
-			};			
-			//console.log( options );
-			
-			returnRequest.post(options,
-				function (error, returnResponse, body) {
-					if (!error && returnResponse.statusCode == 200) {
-						console.log(body)
+			if (innerHTML != '') {
+				var innerHTML64 = Buffer.from(innerHTML).toString('base64');
+				
+				//console.log(innerHTML64);
+				//console.log(Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('ascii'));
+				
+				let options = {  
+					url: 'http://www.njracing.com/upcgrabber.cfc?method=saveHTML',
+					form: { theUPC: request.url, theHTML: innerHTML64 }
+				};			
+				//console.log( options );
+				
+				returnRequest.post(options,
+					function (error, returnResponse, body) {
+						if (!error && returnResponse.statusCode == 200) {
+							console.log(body)
+						}
+						//console.log(returnResponse);
+						console.log('sent');
 					}
-					//console.log(returnResponse);
-					console.log('sent');
-				}
-			);			
-			
-			/*
-			fs.writeFile( __dirname + '/upcs' + request.url + '.html', theHTML, {"encoding":'ascii'}, (err) => {
-				if (err) {
-					responseMsg = responseMsg + '<p>Error thrown</p>';
-					throw err;
-				}
-
-				responseMsg = responseMsg + '<p>Page Saved</p>';
-				console.log('UPC saved!');
-			});
-			*/
+				);			
+			}
 			
 			browser.close();
 		}
 		run();
 		
-		response.write('<html>');
+		response.write('<html><head><title>' + request.url + '</title></head>');
 		response.write('<body>');
 		response.write('<h1>' + request.url + '</h1>');
 		response.write(responseMsg);
 		response.write('</body>');
 		response.write('</html>');
 		response.end();	
-		
+
 	}
 }
 const server = http.createServer(requestHandler)
