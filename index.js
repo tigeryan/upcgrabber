@@ -59,8 +59,11 @@ const requestHandler = (request, response) => {
 				//console.log(innerHTML64);
 				//console.log(Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('ascii'));
 				
+				//https://grab.lookingforagooddeal.com/
+				//http://www.njracing.com/upcgrabber.cfc?method=saveHTML
+
 				let options = {  
-					url: 'http://www.njracing.com/upcgrabber.cfc?method=saveHTML',
+					url: 'https://grab.lookingforagooddeal.com/upcgrabber.cfc?method=saveHTML',
 					form: { theUPC: request.url, theHTML: innerHTML64 }
 				};			
 				//console.log( options );
